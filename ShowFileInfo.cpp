@@ -3,9 +3,8 @@
 	This tool displays data of a binary file in assigned format.
 	Type "ShowFileInfo /?" for usage.
 	
-	C++ÓïÑÔ³ÌĞòÉè¼ÆµÚ3´Î×÷Òµ
-	1400015962
-	ºúË³ê¿£¨Ë«Ñ§Î»£©
+	C++è¯­è¨€ç¨‹åºè®¾è®¡ç¬¬3æ¬¡ä½œä¸š
+	by S.Hu
 */
 #include<iostream>
 #include<iomanip>
@@ -14,7 +13,7 @@
 
 using namespace std;
 
-ifstream myFile;//È«¾Ö±äÁ¿
+ifstream myFile;//å…¨å±€å˜é‡
 
 struct typeWrapper {
 	unsigned int typeSize;
@@ -75,7 +74,7 @@ void ShowData(unsigned int position, const char *argList) {
 			cerr <<"\nError: Invalid argument/option - \'"<< argList[i] << "\'. The byte will be skipped.\nType \"ShowFileInfo /?\" for usage.\n";
 			break;
 		}
-		//½ÓÊÕÊı×Ö
+		//æ¥æ”¶æ•°å­—
 		int offset = 0;
 		for (;(argList[i + 1] >= '0' && argList[i + 1] <= '9')|| argList[i + 1]=='-';) {
 			++i;
@@ -93,27 +92,27 @@ void ShowData(unsigned int position, const char *argList) {
 }
 
 void ShowHex(unsigned int startByte) {
-	ostream::fmtflags oldfmtflags = cout.flags();//±£´æ¾Éflags
-	cout << hex;//Ê¹ÓÃhexÊä³ö
+	ostream::fmtflags oldfmtflags = cout.flags();//ä¿å­˜æ—§flags
+	cout << hex;//ä½¿ç”¨hexè¾“å‡º
 	myFile.seekg(startByte);
 	unsigned char myByte;
 	myFile.read(reinterpret_cast<char*>(&myByte), 1);
 	while (!myFile.eof()) {
 		for (int row = 0;row < 25 && !myFile.eof();++row) {
 			for (int col = 0;col < 20 && !myFile.eof();++col) {
-				cout << setw(2) << setfill('0') << unsigned short int(myByte) << ' ';//¸ñÊ½»¯Êä³ö
+				cout << setw(2) << setfill('0') << unsigned short int(myByte) << ' ';//æ ¼å¼åŒ–è¾“å‡º
 				myFile.read(reinterpret_cast<char*>(&myByte), 1);
 			}
 			cout << endl;
 		}
 		system("pause>nul");
 	}
-	cout.flags(oldfmtflags);//»Ö¸´¾Éflags
+	cout.flags(oldfmtflags);//æ¢å¤æ—§flags
 }
 
 int main(int argc,char *argv[]) {
 	
-	//ÏÔÊ¾°ïÖú
+	//æ˜¾ç¤ºå¸®åŠ©
 	if (argc>=2&&!strcmp(argv[1],"/?")) { 
 		cout << "\n\
     ShowFileInfo [/filetype] [dirve:][path]filename [startByte] [paraList]\n\n\
@@ -153,7 +152,7 @@ Examples:\n\
 		return 0;
 	}
 
-	//½âÎöbmp
+	//è§£æbmp
 	if(argc>=3 && !(strcmp(argv[1],"/BMP") && strcmp(argv[1],"/bmp"))) { 
 		myFile.open(argv[2], ios::binary | ios::in);
 		if (myFile.rdstate() > 0) {
@@ -181,40 +180,40 @@ Examples:\n\
 		return 0;
 	}
 	
-	//È±ÉÙÎÄ¼şÃû
+	//ç¼ºå°‘æ–‡ä»¶å
 	if (argc == 1) {
 		cerr << "The syntax of the command is incorrect.\n\
 Type \"ShowFileInfo /?\" for usage,\n\
 or input the path and filename of a file or drag it into the box: ";
 		string fileName;
 		getline(cin, fileName);
-		if (fileName.size() == 0)return 0;//Ã»ÓĞÊäÈëÖ±½ÓÍË³ö
-		if (fileName.front() == '\"')fileName.erase(fileName.begin());//É¾È¥Á½¶ËµÄÒıºÅ
+		if (fileName.size() == 0)return 0;//æ²¡æœ‰è¾“å…¥ç›´æ¥é€€å‡º
+		if (fileName.front() == '\"')fileName.erase(fileName.begin());//åˆ å»ä¸¤ç«¯çš„å¼•å·
 		if (fileName.back() == '\"')fileName.erase(fileName.end() - 1);
 		myFile.open(fileName, ios::binary | ios::in);
 	}
 	else myFile.open(argv[1], ios::binary | ios::in);
 
-	//¼ì²éÎÄ¼şÊÇ·ñ´ò¿ª³É¹¦
+	//æ£€æŸ¥æ–‡ä»¶æ˜¯å¦æ‰“å¼€æˆåŠŸ
 	if (myFile.rdstate() > 0) {
 		cerr << "Error: Cannot open file." << endl;
 		exit(1);
 	}
 	
 
-	//Æ¥Åä¿ÉÑ¡²ÎÊı
+	//åŒ¹é…å¯é€‰å‚æ•°
 	int startByte = 0;
 	const char *paraList = "";
 	if (argc >= 3) {
-		if (argv[2][0] >= '0' && argv[2][0] <= '9') {//µÚÒ»¸ö×Ö·ûÎªÊı×Ö£¬Æ¥ÅästartByte
+		if (argv[2][0] >= '0' && argv[2][0] <= '9') {//ç¬¬ä¸€ä¸ªå­—ç¬¦ä¸ºæ•°å­—ï¼ŒåŒ¹é…startByte
 			if (argv[2][0] == '0' && argv[2][1] == 'x')startByte = strtol(argv[2], NULL, 16);//hex
 			else startByte = atoi(argv[2]);//oct
-			if (argc > 3) paraList = argv[3];//»¹ÓĞ²ÎÊıÔòÆ¥ÅäparaList
+			if (argc > 3) paraList = argv[3];//è¿˜æœ‰å‚æ•°åˆ™åŒ¹é…paraList
 		}
-		else paraList = argv[2];//µÚÒ»¸ö×Ö·ûÎª×ÖÄ¸£¬Æ¥ÅäparaList
+		else paraList = argv[2];//ç¬¬ä¸€ä¸ªå­—ç¬¦ä¸ºå­—æ¯ï¼ŒåŒ¹é…paraList
 	}
-	if (paraList == "")ShowHex(startByte);//ÎŞparaList£¬ÏÔÊ¾Hex
-	else ShowData(startByte, paraList);//ÓĞparaList
+	if (paraList == "")ShowHex(startByte);//æ— paraListï¼Œæ˜¾ç¤ºHex
+	else ShowData(startByte, paraList);//æœ‰paraList
 	
 	myFile.close();
 	return 0;
