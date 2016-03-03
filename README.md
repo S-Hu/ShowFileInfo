@@ -1,3 +1,3 @@
 # ShowFileInfo
-This tool displays data of a binary file in assigned format.
-Type "ShowFileInfo /?" for usage.
+This tool displays data of a binary file in assigned format.<br>
+Type `ShowFileInfo /?` for usage.
