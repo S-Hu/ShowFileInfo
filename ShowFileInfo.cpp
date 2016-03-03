@@ -3,7 +3,7 @@
 	This tool displays data of a binary file in assigned format.
 	Type "ShowFileInfo /?" for usage.
 	
-	C++语言程序设计第3次作业
+	C++ Programming, Assignment 3
 	by S.Hu
 */
 #include<iostream>
@@ -124,7 +124,7 @@ Parameter List:\n\
     [dirve:][path]filename    Specifies the file to analize.\n\
                               You must assign one file.\n\n\
     [startByte]    Specifies the origin byte to analize.\n\
-                   You can use either Oct or Hex numbers.(Note that Hex numbers\n\
+                   You can use either Dec or Hex numbers.(Note that Hex numbers\n\
                    must be started with 0x.) \n\n\
     [paraList]     Specifies the format to display data in.\n\
                    If not assigned, the data will be displayed in Hex.\n\
@@ -206,8 +206,8 @@ or input the path and filename of a file or drag it into the box: ";
 	const char *paraList = "";
 	if (argc >= 3) {
 		if (argv[2][0] >= '0' && argv[2][0] <= '9') {//第一个字符为数字，匹配startByte
-			if (argv[2][0] == '0' && argv[2][1] == 'x')startByte = strtol(argv[2], NULL, 16);//hex
-			else startByte = atoi(argv[2]);//oct
+			if (argv[2][0] == '0' && argv[2][1] == 'x')startByte = strtol(argv[2], NULL, 16);//Hex
+			else startByte = atoi(argv[2]);//Dec
 			if (argc > 3) paraList = argv[3];//还有参数则匹配paraList
 		}
 		else paraList = argv[2];//第一个字符为字母，匹配paraList
