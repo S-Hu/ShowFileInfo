@@ -13,7 +13,7 @@
 
 using namespace std;
 
-ifstream myFile;//全局变量
+ifstream myFile;
 
 struct typeWrapper {
 	unsigned int typeSize;
@@ -65,10 +65,9 @@ void ShowData(unsigned int position, const char *argList) {
 		case 'B':
 			myType = new Displayer<bool>(position);
 			break;
-		case 'G':{
+		case 'G':
 			myType = nullptr;
 			break;
-		}
 		default:
 			myType = nullptr;
 			cerr <<"\nError: Invalid argument/option - \'"<< argList[i] << "\'. The byte will be skipped.\nType \"ShowFileInfo /?\" for usage.\n";
@@ -125,7 +124,7 @@ Parameter List:\n\
                               You must assign one file.\n\n\
     [startByte]    Specifies the origin byte to analize.\n\
                    You can use either Dec or Hex numbers.(Note that Hex numbers\n\
-                   must be started with 0x.) \n\n\
+                   should start with \"0x\".) \n\n\
     [paraList]     Specifies the format to display data in.\n\
                    If not assigned, the data will be displayed in Hex.\n\
         C    To display 1 byte as Char.\n\
@@ -184,7 +183,7 @@ Examples:\n\
 	if (argc == 1) {
 		cerr << "The syntax of the command is incorrect.\n\
 Type \"ShowFileInfo /?\" for usage,\n\
-or input the path and filename of a file or drag it into the box: ";
+or input the path and filename of a file or drag it into the dialog: ";
 		string fileName;
 		getline(cin, fileName);
 		if (fileName.size() == 0)return 0;//没有输入直接退出
